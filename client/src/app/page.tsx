@@ -1,8 +1,14 @@
+import Image from "next/image";
 
-export default function Home() {
+const Homepage = () => {
   return (
-    <>
-      <h1 className="mt-5">Hello World</h1>
-    </>
+    <div>
+      <div className="relative aspect-3/1 mb-12">
+        <Image src="/featured.png" alt="Feature Product" fill />
+      </div>
+
+    </div>
   );
-}
+};
+
+export default Homepage;
