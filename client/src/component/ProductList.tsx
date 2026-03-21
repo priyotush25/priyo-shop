@@ -1,4 +1,5 @@
 import { ProductsTypes } from "@/types";
+import Link from "next/link";
 import Category from "./Category";
 import ProductCart from "./ProductCart";
 
@@ -117,7 +118,7 @@ const products: ProductsTypes = [
 ]
 
 
-const ProductList = () => {
+const ProductList = ({ category }: { category: string }) => {
     return (
         <div className="w-full">
             <Category />
@@ -125,7 +126,7 @@ const ProductList = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12">
                 {products.map(product => <ProductCart key={product.id} product={product} />)}
             </div>
-
+            <Link href={category ? `/products/?category=${category}` : "/products"} className="flex justify-end mt-4 text-sm text-gray-500">View all products</Link>
         </div>
     );
 };
