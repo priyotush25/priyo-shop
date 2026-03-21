@@ -3,7 +3,6 @@ import Category from "./Category";
 import ProductCart from "./ProductCart";
 
 const products: ProductsTypes = [
-
     {
         "id": 1,
         "name": "Adidas CoreFit T-Shirt",
@@ -25,10 +24,10 @@ const products: ProductsTypes = [
         "description": "Designed for runners, these shorts provide maximum comfort and flexibility.",
         "price": 29.5,
         "sizes": ["s", "m", "l", "xl"],
-        "colors": ["black", "blue", "red"],
+        "colors": ["gray", "blue", "red"],
         "images": {
-            "black": "/products/2b.png",
-            "blue": "/products/2bl.png",
+            "gray": "/products/2g.png",
+            "blue": "/products/2gr.png",
             "red": "/products/2r.png"
         }
     },
@@ -55,9 +54,9 @@ const products: ProductsTypes = [
         "sizes": ["s", "m", "l"],
         "colors": ["black", "green", "yellow"],
         "images": {
-            "black": "/products/4b.png",
+            "black": "/products/4p.png",
             "green": "/products/4g.png",
-            "yellow": "/products/4y.png"
+            "yellow": "/products/4w.png"
         }
     },
     {
@@ -67,10 +66,11 @@ const products: ProductsTypes = [
         "description": "Stretchable fabric with a tapered fit for style and performance.",
         "price": 44.0,
         "sizes": ["m", "l", "xl"],
-        "colors": ["black", "gray"],
+        "colors": ["black", "gray", "red"],
         "images": {
-            "black": "/products/5b.png",
-            "gray": "/products/5g.png"
+            "black": "/products/5bl.png",
+            "gray": "/products/5o.png",
+            "red": "/products/5r.png"
         }
     },
     {
@@ -82,8 +82,8 @@ const products: ProductsTypes = [
         "sizes": ["s", "m", "l", "xl"],
         "colors": ["blue", "black"],
         "images": {
-            "blue": "/products/6bl.png",
-            "black": "/products/6b.png"
+            "blue": "/products/6w.png",
+            "black": "/products/6g.png"
         }
     },
     {
@@ -95,9 +95,9 @@ const products: ProductsTypes = [
         "sizes": ["40", "41", "42", "43", "44"],
         "colors": ["black", "white", "blue"],
         "images": {
-            "black": "/products/7b.png",
-            "white": "/products/7w.png",
-            "blue": "/products/7bl.png"
+            "black": "/products/7g.png",
+            "white": "/products/7p.png",
+            "blue": "/products/7r.png"
         }
     },
     {
@@ -110,10 +110,10 @@ const products: ProductsTypes = [
         "colors": ["black", "red", "white"],
         "images": {
             "black": "/products/8b.png",
-            "red": "/products/8r.png",
-            "white": "/products/8w.png"
+            "red": "/products/8gr.png",
+
         }
-    },
+    }
 ]
 
 
