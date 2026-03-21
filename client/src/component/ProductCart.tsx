@@ -1,24 +1,33 @@
-"use clinet"
+"use client"
 
 import { ProductType } from "@/types";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 
 const ProductCart = ({ product }: { product: ProductType }) => {
-    console.log(product);
+    const [productTypes, setProductTypes] = useState({
+        size: product.sizes[0],
+        color: product.colors[0]
+    })
+
+    const handleProductType = ({ type, value }: { type: "size" | "color", value: string }) => {
+        setProductTypes(prev => ({ ...prev, [type]: value }))
+    }
+
     return (
         <div className="shadow-lg rounded-lg overflow-hidden">
             {/* image */}
             <Link href={`/product/${product.id}`}>
                 <div className="relative aspect-2/3">
-                    <Image src={product.images[product.colors[0]]} alt={product.name} fill className="object-cover hover:scale-105 transition-all duration-300"></Image>
+                    <Image src={product.images[productTypes.color]} alt={product.name} fill className="object-cover hover:scale-105 transition-all duration-300"></Image>
                 </div>
 
             </Link>
             {/* detail */}
-            <div className="flex flex-col gap-4 text-xs p-2">
+            <div className="flex flex-col gap-4 text-xs p-4">
                 <h1 className="font-medium">{product.name}</h1>
                 <p className="text-sm text-gray-500">{product.shortDescription}</p>
 
@@ -27,7 +36,9 @@ const ProductCart = ({ product }: { product: ProductType }) => {
                     {/* SIZE */}
                     <div className="flex flex-col gap-1">
                         <span className="text-gray-500">Size</span>
-                        <select name="size" id="size" className="ring ring-gray-300 rounded-md px-2 py-1">
+                        <select name="size" id="size" className="ring ring-gray-300 rounded-md px-2 py-1"
+                            onChange={e => handleProductType({ type: "size", value: e.target.value })}
+                        >
                             {
                                 product.sizes.map(size => (
                                     <option key={size} value={size}>{size.toUpperCase()}</option>
@@ -41,7 +52,8 @@ const ProductCart = ({ product }: { product: ProductType }) => {
                         <div className="flex items-center gap-2">
                             {
                                 product.colors.map(color => (
-                                    <div key={color} className="">
+                                    <div key={color} className={`cursor-pointer border rounded-full p-0.5 ${productTypes.color === color ? "border-gray-400" : "border-gray-200"}`} onClick={() => handleProductType({ type: "color", value: color })}>
+
                                         <div className="w-4 h-4 rounded-full" style={{ backgroundColor: color }}></div>
                                     </div>
                                 ))
