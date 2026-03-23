@@ -1,10 +1,10 @@
 import ProductList from "@/component/ProductList";
 import Image from "next/image";
 
-const Homepage = async ({ searchParams }: { searchParams: { category: string } }) => {
+const Homepage = async ({ searchParams }: { searchParams: Promise<{ category: string }> }) => {
 
 
-  const category = searchParams.category;
+  const category = (await searchParams).category;
 
   return (
     <div>
@@ -12,7 +12,7 @@ const Homepage = async ({ searchParams }: { searchParams: { category: string } }
         <Image src="/featured.png" alt="Feature Product" fill />
       </div>
       <div>
-        <ProductList category={category} />
+        <ProductList category={category} params="homepage" />
       </div>
     </div>
   );
