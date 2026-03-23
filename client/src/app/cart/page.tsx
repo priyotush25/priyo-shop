@@ -1,11 +1,11 @@
 "use client"
 
+import { CartItemsType } from "@/types";
 import { ArrowRight } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 
-
-const step = [
+const steps = [
     {
         id: 1,
         title: "Shipping Cart"
@@ -20,8 +20,7 @@ const step = [
     }
 ]
 
-
-const cartItems = [
+const cartItems: CartItemsType = [
     {
         "id": 1,
         "name": "Adidas CoreFit T-Shirt",
@@ -75,14 +74,11 @@ const cartItems = [
     }
 ]
 
-
-
 const CartPage = () => {
 
     const searchParams = useSearchParams();
     const router = useRouter();
     const activeStep = parseInt(searchParams.get("step") || "1")
-
 
     return (
         <div className="flex flex-col gap-8 items-center justify-center mt-12">
@@ -93,7 +89,7 @@ const CartPage = () => {
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
 
                 {
-                    step.map(step => (
+                    steps.map(step => (
                         <div key={step.id} className={`flex items-center gap-2 border-b-2 pb-4 ${step.id === activeStep ? "border-gray-800" : "border-gray-200"}`}>
                             <div className={`w-6 h-6 rounded-full text-white p-4 flex items-center justify-center ${step.id === activeStep ? "bg-gray-800" : "bg-gray-400"}`}>{step.id}</div>
                             <p className={`text-sm font-medium ${step.id === activeStep ? "text-gray-800" : "text-gray-400"}`}>{step.title}</p>
@@ -112,15 +108,45 @@ const CartPage = () => {
                 {/* DETAILS */}
                 <div className="w-full lg:w-5/12 shadow-lg border border-gray-100 p-8 rounded-lg flex flex-col gap-8">
                     <h2 className="font-semibold">Cart Details</h2>
-                    <div>
+
+                    <div className="flex items-center justify-between text-sm text-gray-500 font-medium">
                         <p>Subtotal</p>
-                        <p>Discount</p>
-                        <p>Shipping Fee</p>
+                        <p className="text-gray-800">$
+                            {
+                                cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)
+                            }
+                        </p>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm text-gray-500 font-medium">
+                        <p>Discount(10%)</p>
+                        <p className="text-gray-800">$10
+                        </p>
                     </div>
 
 
+                    <div className="flex items-center justify-between text-sm text-gray-500 font-medium">
+                        <p>Shipping Fee</p>
+                        <p className="text-gray-800">$
+                            10
+                        </p>
+                    </div>
+
+                    <hr className="border border-gray-200" />
+
+
+                    <div className="flex items-center justify-between text-sm text-gray-800 font-medium">
+                        <p>Total</p>
+                        <p>$
+                            {
+                                cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)
+                            }
+                        </p>
+                    </div>
+
                     <div>
-                        <button className="text-sm font-medium text-white bg-black px-4 py-2 rounded-lg w-full flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-800">Continue <ArrowRight className="w-3 h-3" /> </button>
+                        <button onClick={() => router.push("/cart?step=2", { scroll: false })}
+                            className="text-sm font-medium text-white bg-black px-4 py-2 rounded-lg w-full flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-800">Continue <ArrowRight className="w-3 h-3" /> </button>
                     </div>
                 </div>
             </div>
