@@ -1,5 +1,9 @@
 "use client"
 
+import { ArrowRight } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+
+
 
 const step = [
     {
@@ -30,7 +34,10 @@ const cartItems = [
             "gray": "/products/1g.png",
             "purple": "/products/1p.png",
             "green": "/products/1gr.png"
-        }
+        },
+        quantity: 1,
+        selectedSize: "m",
+        selectedColor: "gray"
     },
     {
         "id": 2,
@@ -44,7 +51,10 @@ const cartItems = [
             "gray": "/products/2g.png",
             "blue": "/products/2gr.png",
             "red": "/products/2r.png"
-        }
+        },
+        quantity: 1,
+        selectedSize: "xl",
+        selectedColor: "blue"
     },
     {
         "id": 3,
@@ -58,16 +68,63 @@ const cartItems = [
             "black": "/products/3b.png",
             "gray": "/products/3g.png",
             "white": "/products/3w.png"
-        }
+        },
+        quantity: 1,
+        selectedSize: "l",
+        selectedColor: "black"
     }
 ]
 
 
 
 const CartPage = () => {
+
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const activeStep = parseInt(searchParams.get("step") || "1")
+
+
     return (
-        <div>
-            <h1>Cart Page</h1>
+        <div className="flex flex-col gap-8 items-center justify-center mt-12">
+            {/* TITLE */}
+            <h1 className="text-2xl font-medium">Your Shopping Cart</h1>
+
+            {/* STEP */}
+            <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+
+                {
+                    step.map(step => (
+                        <div key={step.id} className={`flex items-center gap-2 border-b-2 pb-4 ${step.id === activeStep ? "border-gray-800" : "border-gray-200"}`}>
+                            <div className={`w-6 h-6 rounded-full text-white p-4 flex items-center justify-center ${step.id === activeStep ? "bg-gray-800" : "bg-gray-400"}`}>{step.id}</div>
+                            <p className={`text-sm font-medium ${step.id === activeStep ? "text-gray-800" : "text-gray-400"}`}>{step.title}</p>
+
+                        </div>
+                    ))
+                }
+
+            </div>
+            {/* STEP & DETAILS */}
+            <div className="w-full flex flex-col lg:flex-row gap-16">
+
+                {/* STEP */}
+                <div className="w-full lg:w-7/12 shadow-lg border border-gray-100 p-8 rounded-lg flex flex-col gap-8">1</div>
+
+                {/* DETAILS */}
+                <div className="w-full lg:w-5/12 shadow-lg border border-gray-100 p-8 rounded-lg flex flex-col gap-8">
+                    <h2 className="font-semibold">Cart Details</h2>
+                    <div>
+                        <p>Subtotal</p>
+                        <p>Discount</p>
+                        <p>Shipping Fee</p>
+                    </div>
+
+
+                    <div>
+                        <button className="text-sm font-medium text-white bg-black px-4 py-2 rounded-lg w-full flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-800">Continue <ArrowRight className="w-3 h-3" /> </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 };
