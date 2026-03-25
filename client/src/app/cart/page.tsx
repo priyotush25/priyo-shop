@@ -2,7 +2,8 @@
 
 import PaymentForm from "@/component/PaymentForm";
 import ShippingForm from "@/component/ShippingForm";
-import { CartItemsType, shippingFormInputs } from "@/types";
+import useCartStore from "@/store/cartStore";
+import { shippingFormInputs } from "@/types";
 import { ArrowRight, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -23,62 +24,62 @@ const steps = [
     },
 ];
 
-const cartItems: CartItemsType = [
-    {
-        id: 1,
-        name: "Adidas CoreFit T-Shirt",
-        shortDescription: "Lightweight performance t-shirt for everyday workouts.",
-        description:
-            "Breathable and moisture-wicking fabric designed for comfort during training or casual wear.",
-        price: 39.9,
-        sizes: ["s", "m", "l", "xl", "xxl"],
-        colors: ["gray", "purple", "green"],
-        images: {
-            gray: "/products/1g.png",
-            purple: "/products/1p.png",
-            green: "/products/1gr.png",
-        },
-        quantity: 1,
-        selectedSize: "m",
-        selectedColor: "gray",
-    },
-    {
-        id: 2,
-        name: "Nike Flex Run Shorts",
-        shortDescription: "Flexible running shorts with breathable mesh.",
-        description:
-            "Designed for runners, these shorts provide maximum comfort and flexibility.",
-        price: 29.5,
-        sizes: ["s", "m", "l", "xl"],
-        colors: ["gray", "blue", "red"],
-        images: {
-            gray: "/products/2g.png",
-            blue: "/products/2gr.png",
-            red: "/products/2r.png",
-        },
-        quantity: 1,
-        selectedSize: "xl",
-        selectedColor: "blue",
-    },
-    {
-        id: 3,
-        name: "Puma Active Hoodie",
-        shortDescription: "Warm and stylish hoodie for active days.",
-        description:
-            "Soft fleece interior with a modern fit, perfect for workouts or lounging.",
-        price: 49.99,
-        sizes: ["m", "l", "xl", "xxl"],
-        colors: ["black", "gray", "white"],
-        images: {
-            black: "/products/3b.png",
-            gray: "/products/3g.png",
-            white: "/products/3w.png",
-        },
-        quantity: 1,
-        selectedSize: "l",
-        selectedColor: "black",
-    },
-];
+// const cartItems: CartItemsType = [
+//     {
+//         id: 1,
+//         name: "Adidas CoreFit T-Shirt",
+//         shortDescription: "Lightweight performance t-shirt for everyday workouts.",
+//         description:
+//             "Breathable and moisture-wicking fabric designed for comfort during training or casual wear.",
+//         price: 39.9,
+//         sizes: ["s", "m", "l", "xl", "xxl"],
+//         colors: ["gray", "purple", "green"],
+//         images: {
+//             gray: "/products/1g.png",
+//             purple: "/products/1p.png",
+//             green: "/products/1gr.png",
+//         },
+//         quantity: 1,
+//         selectedSize: "m",
+//         selectedColor: "gray",
+//     },
+//     {
+//         id: 2,
+//         name: "Nike Flex Run Shorts",
+//         shortDescription: "Flexible running shorts with breathable mesh.",
+//         description:
+//             "Designed for runners, these shorts provide maximum comfort and flexibility.",
+//         price: 29.5,
+//         sizes: ["s", "m", "l", "xl"],
+//         colors: ["gray", "blue", "red"],
+//         images: {
+//             gray: "/products/2g.png",
+//             blue: "/products/2gr.png",
+//             red: "/products/2r.png",
+//         },
+//         quantity: 1,
+//         selectedSize: "xl",
+//         selectedColor: "blue",
+//     },
+//     {
+//         id: 3,
+//         name: "Puma Active Hoodie",
+//         shortDescription: "Warm and stylish hoodie for active days.",
+//         description:
+//             "Soft fleece interior with a modern fit, perfect for workouts or lounging.",
+//         price: 49.99,
+//         sizes: ["m", "l", "xl", "xxl"],
+//         colors: ["black", "gray", "white"],
+//         images: {
+//             black: "/products/3b.png",
+//             gray: "/products/3g.png",
+//             white: "/products/3w.png",
+//         },
+//         quantity: 1,
+//         selectedSize: "l",
+//         selectedColor: "black",
+//     },
+// ];
 
 const CartPage = () => {
     const searchParams = useSearchParams();
@@ -86,6 +87,10 @@ const CartPage = () => {
     const activeStep = parseInt(searchParams.get("step") || "1");
 
     const [shippingForm, setShippingForm] = useState<shippingFormInputs | null>(null)
+
+
+    const { cart, removeFromCart } = useCartStore();
+
 
     return (
         <div className="flex flex-col gap-8 items-center justify-center mt-12">
@@ -118,7 +123,7 @@ const CartPage = () => {
                 {/* STEP */}
                 <div className="w-full lg:w-7/12 shadow-lg border border-gray-100 p-8 rounded-lg flex flex-col gap-8">
                     {activeStep === 1 ? (
-                        cartItems.map((item) =>
+                        cart.map((item) =>
 
                             <div key={item.id} className="flex items-center justify-between">
                                 {/* IMAGE & DETAILS */}
@@ -141,7 +146,8 @@ const CartPage = () => {
 
                                 </div>
                                 {/* BUTTON */}
-                                <button className="w-8 h-8 rounded-full bg-red-400 hover:bg-red-200 transition-all duration-300 flex items-center justify-center cursor-pointer"> <Trash2 className="w-3 h-3 text-gray-800" /> </button>
+                                <button onClick={() => removeFromCart(item)}
+                                    className="w-8 h-8 rounded-full bg-red-400 hover:bg-red-200 transition-all duration-300 flex items-center justify-center cursor-pointer"> <Trash2 className="w-3 h-3 text-gray-800" /> </button>
 
                             </div>)
 
@@ -169,7 +175,7 @@ const CartPage = () => {
                         <p>Subtotal</p>
                         <p className="text-gray-800">
                             $
-                            {cartItems
+                            {cart
                                 .reduce((acc, item) => acc + item.price * item.quantity, 0)
                                 .toFixed(2)}
                         </p>
@@ -191,7 +197,7 @@ const CartPage = () => {
                         <p>Total</p>
                         <p>
                             $
-                            {cartItems
+                            {cart
                                 .reduce((acc, item) => acc + item.price * item.quantity, 0)
                                 .toFixed(2)}
                         </p>
