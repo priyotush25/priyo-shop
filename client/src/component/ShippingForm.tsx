@@ -43,8 +43,6 @@ const ShippingForm = ({ setShippingForm }: { setShippingForm: (data: shippingFor
                 }
             </div>
 
-
-
             <div className="flex flex-col gap-1">
                 <label htmlFor="phone" className="text-sm text-gray-500 font-medium">Phone</label>
                 <input type="text" placeholder="Enter your phone" {...register("phone")} className="text-xs border-b border-gray-200 outline-none py-2" />

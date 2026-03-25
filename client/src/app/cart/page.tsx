@@ -2,7 +2,7 @@
 
 import PaymentForm from "@/component/PaymentForm";
 import ShippingForm from "@/component/ShippingForm";
-import { CartItemsType } from "@/types";
+import { CartItemsType, shippingFormInputs } from "@/types";
 import { ArrowRight, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -85,7 +85,7 @@ const CartPage = () => {
     const router = useRouter();
     const activeStep = parseInt(searchParams.get("step") || "1");
 
-    const [shippingForm, setShippingForm] = useState(null)
+    const [shippingForm, setShippingForm] = useState<shippingFormInputs | null>(null)
 
     return (
         <div className="flex flex-col gap-8 items-center justify-center mt-12">
@@ -148,8 +148,11 @@ const CartPage = () => {
 
                     ) : activeStep === 2 ? (
                         <ShippingForm setShippingForm={setShippingForm} />
-                    ) : activeStep === 3 && <ShippingForm /> ? (
+
+                    ) : activeStep === 3 && <ShippingForm setShippingForm={setShippingForm} /> ? (
+
                         <PaymentForm />
+
                     ) : (
                         <p className="text-sm text-gray-500">
                             Please fill in the shipping form to continue
@@ -159,7 +162,7 @@ const CartPage = () => {
                 </div>
 
                 {/* DETAILS */}
-                <div className="w-full lg:w-5/12 shadow-lg border border-gray-100 p-8 rounded-lg flex flex-col gap-8 h-max">
+                <div className="w-full lg:w-5/12 shadow-lg border border-gray-100 p-8 rounded-lg flex flex-col gap-4 h-max">
                     <h2 className="font-semibold">Cart Details</h2>
 
                     <div className="flex items-center justify-between text-sm text-gray-500 font-medium">
