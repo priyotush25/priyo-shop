@@ -41,7 +41,7 @@ const PaymentForm = () => {
             {/* Card Number */}
             <div className="flex flex-col gap-1">
                 <label htmlFor="cartNumber" className="text-sm text-gray-500 font-medium">Card Number</label>
-                <input type="email" id="cardNumber" placeholder="123456789123" {...register("cardNumber")} className="text-xs border-b border-gray-200 outline-none py-2" />
+                <input type="text" id="cardNumber" placeholder="123456789123" {...register("cardNumber")} className="text-xs border-b border-gray-200 outline-none py-2" />
                 {
                     errors.cardNumber && (<p className="text-xs text-gray-500">{errors.cardNumber.message}</p>)
                 }
