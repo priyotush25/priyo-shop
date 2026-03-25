@@ -6,6 +6,7 @@ import { CartItemsType } from "@/types";
 import { ArrowRight, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const steps = [
     {
@@ -84,6 +85,8 @@ const CartPage = () => {
     const router = useRouter();
     const activeStep = parseInt(searchParams.get("step") || "1");
 
+    const [shippingForm, setShippingForm] = useState(null)
+
     return (
         <div className="flex flex-col gap-8 items-center justify-center mt-12">
             {/* TITLE */}
@@ -144,7 +147,7 @@ const CartPage = () => {
 
 
                     ) : activeStep === 2 ? (
-                        <ShippingForm />
+                        <ShippingForm setShippingForm={setShippingForm} />
                     ) : activeStep === 3 && <ShippingForm /> ? (
                         <PaymentForm />
                     ) : (
@@ -152,10 +155,6 @@ const CartPage = () => {
                             Please fill in the shipping form to continue
                         </p>
                     )}
-
-
-
-                    1
 
                 </div>
 
