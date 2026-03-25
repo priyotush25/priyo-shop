@@ -1,5 +1,6 @@
 "use client"
 
+import useCartStore from "@/store/cartStore";
 import { ProductType } from "@/types";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
@@ -16,6 +17,21 @@ const ProductCart = ({ product }: { product: ProductType }) => {
     const handleProductType = ({ type, value }: { type: "size" | "color", value: string }) => {
         setProductTypes(prev => ({ ...prev, [type]: value }))
     }
+
+    // add to cart
+    const { addToCart } = useCartStore();
+
+    const handleAddToCart = () => {
+        addToCart(
+            {
+                ...product,
+                quantity: 1,
+                selectedSize: productTypes.size,
+                selectedColor: productTypes.color,
+            }
+        );
+    }
+
 
     return (
         <div className="shadow-lg rounded-lg overflow-hidden">
@@ -66,7 +82,9 @@ const ProductCart = ({ product }: { product: ProductType }) => {
 
                     <p className="font-medium text-lg">${product.price.toFixed(2)}</p>
 
-                    <button className="flex items-center gap-1 ring cursor-pointer ring-gray-200 px-2 py-1 rounded-md hover:bg-black hover:text-white transition-all duration-300"><ShoppingCart className="w-4 h-4" /> Add to cart</button>
+                    <button
+                        onClick={handleAddToCart}
+                        className="flex items-center gap-1 ring cursor-pointer ring-gray-200 px-2 py-1 rounded-md hover:bg-black hover:text-white transition-all duration-300"><ShoppingCart className="w-4 h-4" /> Add to cart</button>
 
                 </div>
 
