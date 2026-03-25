@@ -6,6 +6,7 @@ import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 
 const ProductCart = ({ product }: { product: ProductType }) => {
@@ -30,6 +31,7 @@ const ProductCart = ({ product }: { product: ProductType }) => {
                 selectedColor: productTypes.color,
             }
         );
+        toast.success("Product add to cart")
     }
 
 

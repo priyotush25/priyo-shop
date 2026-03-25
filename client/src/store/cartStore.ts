@@ -1,19 +1,26 @@
 import { CartStoreActionType, CartStoreStateType } from "@/types";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 const useCartStore = create<CartStoreStateType & CartStoreActionType>()(
-  (set) => ({
-    cart: [],
-    addToCart: (product) =>
-      set((state) => ({ cart: [...state.cart, product] })),
+  persist(
+    (set) => ({
+      cart: [],
+      addToCart: (product) =>
+        set((state) => ({ cart: [...state.cart, product] })),
 
-    removeFormCart: (product) =>
-      set((state) => ({
-        cart: [...state.cart.filter((p) => p.id != product.id)],
-      })),
+      removeFormCart: (product) =>
+        set((state) => ({
+          cart: [...state.cart.filter((p) => p.id != product.id)],
+        })),
 
-    clearCart: () => set({ cart: [] }),
-  }),
+      clearCart: () => set({ cart: [] }),
+    }),
+    {
+      name: "cart",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
 );
 
 export default useCartStore;
