@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 
 const ProductCart = ({ product }: { product: ProductType }) => {
     const [productTypes, setProductTypes] = useState({
-        size: product.sizes[0],
-        color: product.colors[0]
+        size: product.sizes?.[0] || "",
+        color: product.colors?.[0] || ""
     })
 
     const handleProductType = ({ type, value }: { type: "size" | "color", value: string }) => {
@@ -38,9 +38,9 @@ const ProductCart = ({ product }: { product: ProductType }) => {
     return (
         <div className="shadow-lg rounded-lg overflow-hidden">
             {/* image */}
-            <Link href={`/product/${product.id}`}>
+            <Link href={`/products/${product.id}`}>
                 <div className="relative aspect-2/3">
-                    <Image src={product.images[productTypes.color]} alt={product.name} fill className="object-cover hover:scale-105 transition-all duration-300"></Image>
+                    <Image src={product.images?.[productTypes.color]} alt={product.name} fill className="object-cover hover:scale-105 transition-all duration-300"></Image>
                 </div>
 
             </Link>
